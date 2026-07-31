@@ -80,6 +80,23 @@ stayed at zero.
 same FiatToken build, so the same instruction path works for a euro leg. Not exercised
 in this build. The code does not pretend otherwise.
 
+## The web app
+
+`uvicorn sanad.api.app:app --app-dir src --port 8099`, then `http://127.0.0.1:8099`.
+Three tabs. **Build a run** takes a payee table where each row carries its amount,
+invoice reference, ISO 20022 purpose code and CBUAE code, screens it against a
+denylist, encodes the instruction, prices the run and shows the exact bytes that will
+go on chain. Nothing sends until a simulation has passed. **Audit from the chain**
+rebuilds every run from Arc with three log queries and one transaction read per run,
+reports whether each mandate digest recomputes, breaks totals down by purpose code,
+derives a counterparty history that reads as credit history, then finds any payment by
+its invoice reference through an indexed memo topic rather than a scan. **What this
+uses** reads the Arc and Circle addresses from the chain at page load rather than
+hardcoding them, so the page cannot claim an integration that is not live.
+
+Of the five API routes only settlement needs a key, so the entire audit half runs
+against Arc with no credentials.
+
 ## The audit, which is the point
 
 Drop the database and rebuild every invoice, purpose code and payee receipt from Arc

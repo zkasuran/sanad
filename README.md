@@ -155,6 +155,38 @@ stale input is named rather than just rejected. Full layout in
 `memoId` is `keccak256(endToEndId)`, and it is an indexed topic, so looking a payment up
 by its invoice reference is one `eth_getLogs` filter rather than a scan.
 
+## The web app, which is where you see all of it
+
+```
+uvicorn sanad.api.app:app --app-dir src --port 8099
+```
+
+Then open `http://127.0.0.1:8099`. Three tabs, and the second one is the point.
+
+**Build a run.** A payee table where each row carries the amount, the invoice
+reference, the ISO 20022 purpose code and the CBUAE three letter code. "Load a Dubai
+SME run" fills a realistic four payee run. "Screen and simulate" runs the denylist
+screening, encodes the instruction, prices the whole run and shows you the exact bytes
+that will go on chain, all without sending anything. "Settle on Arc" stays disabled
+until a simulation has passed, and it is the only button in the app that spends.
+
+**Audit from the chain.** Press rebuild and the page reconstructs every run from Arc
+with three log queries and one transaction read per run, then arithmetic. No database
+is consulted because there is not one. It reports whether each mandate digest
+recomputes to what was anchored, breaks the totals down by purpose code, then derives a
+counterparty history, which is the thing a lender actually reads as credit. There is
+also a lookup that finds a payment by its invoice reference: the memo id is the keccak
+of the ISO 20022 end to end id and it is an indexed topic, so that is one log filter
+rather than a scan.
+
+**What this uses.** The Arc primitives and the Circle products, with the addresses read
+from the chain when the page loads rather than hardcoded into it, so the page cannot
+claim an integration that is not there.
+
+The API behind it is five routes (`/api/config`, `/api/ledger`, `/api/runs/preview`,
+`/api/runs/settle`, `/api/docs`). Only the settle route needs a key, so the whole audit
+half of the app runs against Arc with no credentials at all.
+
 ## Quickstart
 
 ```bash
