@@ -9,6 +9,7 @@ because they were never stored anywhere else.
 [![pytest](https://img.shields.io/badge/pytest-25_passing-0f8a56)](#tests)
 [![forge](https://img.shields.io/badge/forge-10_passing-0f8a56)](#tests)
 [![Circle](https://img.shields.io/badge/Circle-USDC_%2B_Wallets-2775CA)](#circle-products-and-how-they-are-used)
+[![live](https://img.shields.io/badge/try_it-zkasuran.github.io%2Fsanad-7fd1b9)](https://zkasuran.github.io/sanad/)
 
 Sanad is Arabic for the deed, and in the classical sciences for the chain of
 transmission that makes a report trustworthy. That is the whole thesis: the payment
@@ -156,6 +157,15 @@ stale input is named rather than just rejected. Full layout in
 by its invoice reference is one `eth_getLogs` filter rather than a scan.
 
 ## The web app, which is where you see all of it
+
+**Live, no install: [zkasuran.github.io/sanad](https://zkasuran.github.io/sanad/)**. That
+is a static copy on GitHub Pages, so the Python API is not running behind it: every
+reading comes from a committed snapshot of the real API, taken at the Arc block the
+banner names. The audit tab works in full there, because auditing is a read. Settling
+needs the server. `scripts/build_pages.py` builds `docs/` from `web/`, so there is one
+source rather than a fork that drifts.
+
+For the live version:
 
 ```
 uvicorn sanad.api.app:app --app-dir src --port 8099

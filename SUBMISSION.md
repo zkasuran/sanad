@@ -82,7 +82,12 @@ in this build. The code does not pretend otherwise.
 
 ## The web app
 
-`uvicorn sanad.api.app:app --app-dir src --port 8099`, then `http://127.0.0.1:8099`.
+**Live at [zkasuran.github.io/sanad](https://zkasuran.github.io/sanad/)** with nothing to
+install. That copy is static, so every reading comes from a committed snapshot of the
+real API at the Arc block its banner names, the audit tab works in full because auditing
+is a read, and settling says it needs the server rather than pretending. For the live
+version: `uvicorn sanad.api.app:app --app-dir src --port 8099`, then
+`http://127.0.0.1:8099`.
 Three tabs. **Build a run** takes a payee table where each row carries its amount,
 invoice reference, ISO 20022 purpose code and CBUAE code, screens it against a
 denylist, encodes the instruction, prices the run and shows the exact bytes that will
@@ -138,6 +143,7 @@ version, so `forge test` runs from a clean clone with no extra install step.
 ## Links
 
 - Repository: https://github.com/zkasuran/sanad
+- Live app, static copy on GitHub Pages: https://zkasuran.github.io/sanad/
 - Demo video: PASTE YOUTUBE LINK
 - Contract on Arc testnet: https://testnet.arcscan.app/address/0xC73090627ac5ed6fb651807c6A3E64D2FFa34194
 - Circle product feedback: `docs/CIRCLE-PRODUCT-FEEDBACK.md`
