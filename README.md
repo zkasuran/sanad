@@ -161,14 +161,14 @@ by its invoice reference is one `eth_getLogs` filter rather than a scan.
 uvicorn sanad.api.app:app --app-dir src --port 8099
 ```
 
-Then open `http://127.0.0.1:8099`. Three tabs, and the second one is the point.
+Then open `http://127.0.0.1:8099`. Three tabs. The second one is the point.
 
 **Build a run.** A payee table where each row carries the amount, the invoice
 reference, the ISO 20022 purpose code and the CBUAE three letter code. "Load a Dubai
 SME run" fills a realistic four payee run. "Screen and simulate" runs the denylist
 screening, encodes the instruction, prices the whole run and shows you the exact bytes
 that will go on chain, all without sending anything. "Settle on Arc" stays disabled
-until a simulation has passed, and it is the only button in the app that spends.
+until a simulation has passed, so it is the only button in the app that spends.
 
 **Audit from the chain.** Press rebuild and the page reconstructs every run from Arc
 with three log queries and one transaction read per run, then arithmetic. No database
