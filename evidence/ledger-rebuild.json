@@ -1,0 +1,182 @@
+{
+ "fromBlock": 54525184,
+ "toBlock": 54525515,
+ "mandate": "0xC73090627ac5ed6fb651807c6A3E64D2FFa34194",
+ "runs": [
+  {
+   "runId": "RUN-20260731-024406",
+   "runIdHash": "0x7c2aa7a8df5379042ba28be71e5ba677332e84fb56bf66a0a3e0d385446aef3a",
+   "payer": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "tx": "0x296796c8689eb4e53972271f2bb8f143c629eed9dd889ae35596d3b6eb8520f4",
+   "authorizedPayees": 4,
+   "authorizedMinor": 56250,
+   "settledMinor": 56250,
+   "anchoredDigest": "0xc6c2f76c1ac1b9775fde3cbbac422387022031e6b447ece9006ee53a86f30a20",
+   "recomputedDigest": "0xc6c2f76c1ac1b9775fde3cbbac422387022031e6b447ece9006ee53a86f30a20",
+   "digestRule": 2,
+   "digestRecomputable": true,
+   "digestMatches": true,
+   "everyInstructionBinds": true,
+   "pqVerified": false,
+   "complete": true,
+   "problems": [],
+   "payments": [
+    {
+     "reference": "INV-AE-4101",
+     "isoPurpose": "SUPP",
+     "uaePurpose": "GDI",
+     "payee": "0x6a1b4267921f41f9d5d1facf998da9bb930701c4",
+     "amountMinor": 12500,
+     "verified": true,
+     "memoIndex": 322400
+    },
+    {
+     "reference": "INV-AE-4102",
+     "isoPurpose": "SCVE",
+     "uaePurpose": "PMS",
+     "payee": "0x000000000000000000000000000000000000dead",
+     "amountMinor": 8750,
+     "verified": true,
+     "memoIndex": 322401
+    },
+    {
+     "reference": "INV-AE-4103",
+     "isoPurpose": "GDDS",
+     "uaePurpose": "GDI",
+     "payee": "0x000000000000000000000000000000000000beef",
+     "amountMinor": 15000,
+     "verified": true,
+     "memoIndex": 322402
+    },
+    {
+     "reference": "INV-AE-4104",
+     "isoPurpose": "SALA",
+     "uaePurpose": "SAL",
+     "payee": "0x1111111111111111111111111111111111111111",
+     "amountMinor": 20000,
+     "verified": true,
+     "memoIndex": 322403
+    }
+   ]
+  },
+  {
+   "runId": "AUTH-20260731-024410",
+   "runIdHash": "0x867066552fb3b58710be09e2cdeadc5fa0c0e39e82543e4ebc76af2880d78604",
+   "payer": "0x6a1b4267921f41f9d5d1facf998da9bb930701c4",
+   "tx": "0x721e4e3b0cabebb9c834013ad884222356e4bf60609612728ec2caf73a107dcf",
+   "authorizedPayees": 2,
+   "authorizedMinor": 10000,
+   "settledMinor": 0,
+   "anchoredDigest": "0x37af79eeb6630f920670c7b5e4fa159499f70fc18d3bbed8af361d465c8693ec",
+   "recomputedDigest": "0xe42fd86bf0c6dd58f169e6cb870f531c2c0ff39c24a952512210479735be6273",
+   "digestRule": 2,
+   "digestRecomputable": true,
+   "digestMatches": false,
+   "everyInstructionBinds": false,
+   "pqVerified": false,
+   "complete": false,
+   "problems": [
+    "authorized 10000 minor units, settled 0",
+    "the payments do not hash to the anchored mandate digest, so this run settled something other than what was authorized",
+    "AUTH-20260731-024410-01: memo does not bind its own transfer",
+    "AUTH-20260731-024410-02: memo does not bind its own transfer"
+   ],
+   "payments": [
+    {
+     "reference": "AUTH-20260731-024410-01",
+     "isoPurpose": "SUPP",
+     "uaePurpose": "GDI",
+     "payee": "0x0000000000000000000000000000000000000000",
+     "amountMinor": 0,
+     "verified": false,
+     "memoIndex": 322406
+    },
+    {
+     "reference": "AUTH-20260731-024410-02",
+     "isoPurpose": "SCVE",
+     "uaePurpose": "PMS",
+     "payee": "0x0000000000000000000000000000000000000000",
+     "amountMinor": 0,
+     "verified": false,
+     "memoIndex": 322407
+    }
+   ]
+  },
+  {
+   "runId": "AUTH-20260731-024504",
+   "runIdHash": "0xad8ecb9c435b63b090bdb07674b93a4f659d17acfae6cb4b622256ea1c960fc5",
+   "payer": "0x5074b92189e295f46597037f3b972786578d05d2",
+   "tx": "0x98128c1128d7582424ae07ec899730cd22e137a636769ba920b18cb1e40c8e72",
+   "authorizedPayees": 2,
+   "authorizedMinor": 10000,
+   "settledMinor": 0,
+   "anchoredDigest": "0xc03f0542b957aa98bc39dedbdca89cb842561704ea1d32ca0c8c5baa5b88fe8b",
+   "recomputedDigest": "0x2279e89c5e6da5f929b780225b7c66006581393e276c40964105cec6d3342a83",
+   "digestRule": 2,
+   "digestRecomputable": true,
+   "digestMatches": false,
+   "everyInstructionBinds": false,
+   "pqVerified": false,
+   "complete": false,
+   "problems": [
+    "authorized 10000 minor units, settled 0",
+    "the payments do not hash to the anchored mandate digest, so this run settled something other than what was authorized",
+    "AUTH-20260731-024504-01: memo does not bind its own transfer",
+    "AUTH-20260731-024504-02: memo does not bind its own transfer"
+   ],
+   "payments": [
+    {
+     "reference": "AUTH-20260731-024504-01",
+     "isoPurpose": "SUPP",
+     "uaePurpose": "GDI",
+     "payee": "0x0000000000000000000000000000000000000000",
+     "amountMinor": 0,
+     "verified": false,
+     "memoIndex": 322409
+    },
+    {
+     "reference": "AUTH-20260731-024504-02",
+     "isoPurpose": "SCVE",
+     "uaePurpose": "PMS",
+     "payee": "0x0000000000000000000000000000000000000000",
+     "amountMinor": 0,
+     "verified": false,
+     "memoIndex": 322410
+    }
+   ]
+  }
+ ],
+ "byPurpose": {
+  "SALA": [
+   1,
+   20000
+  ],
+  "GDDS": [
+   1,
+   15000
+  ],
+  "SUPP": [
+   3,
+   12500
+  ],
+  "SCVE": [
+   3,
+   8750
+  ]
+ },
+ "byUaePurpose": {
+  "GDI": [
+   4,
+   27500
+  ],
+  "SAL": [
+   1,
+   20000
+  ],
+  "PMS": [
+   3,
+   8750
+  ]
+ },
+ "allRunsReconcile": false
+}

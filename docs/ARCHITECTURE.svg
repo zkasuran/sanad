@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 800" width="1240" height="800" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial" role="img" aria-labelledby="t d">
+<title id="t">Sanad architecture: authorize, settle in one transaction, prove from the chain</title>
+<desc id="d">A payer authorizes a payout run either from its own key or from a Circle developer controlled wallet. Sanad builds one Multicall3From transaction that opens a mandate and pays every payee through Arc's Memo contract, so each payment carries its ISO 20022 instruction. An auditor rebuilds the whole ledger from Arc logs and transaction input with no database and no key.</desc>
+<defs>
+  <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#5b6472"/>
+  </marker>
+  <marker id="arwg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1f8a5b"/>
+  </marker>
+  <style>
+    .lbl{font-size:13px;fill:#1b2430}
+    .sub{font-size:11.5px;fill:#5b6472}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;fill:#3b4756}
+    .col{font-size:12px;font-weight:700;fill:#8a6d1f;letter-spacing:.09em}
+    .box{fill:#fff;stroke:#c9d2dd;stroke-width:1.2;rx:10}
+    .arc{fill:#fbf6ea;stroke:#dcc79a;stroke-width:1.2}
+    .ours{fill:#eef6ff;stroke:#9dc3ea}
+    .circle{fill:#eaf3fd;stroke:#2775ca;stroke-dasharray:4 3}
+    .ok{fill:#edf9f2;stroke:#1f8a5b}
+    .ln{stroke:#5b6472;stroke-width:1.3;fill:none;marker-end:url(#arw)}
+    .lng{stroke:#1f8a5b;stroke-width:1.4;fill:none;marker-end:url(#arwg)}
+  </style>
+</defs>
+
+<rect width="1240" height="800" fill="#fdfbf6"/>
+<text x="40" y="46" font-size="21" font-weight="700" fill="#1b2430">Sanad</text>
+<text x="112" y="46" font-size="14" fill="#5b6472">every payout carries its own instruction, and the whole ledger rebuilds from Arc</text>
+
+<line x1="404" y1="70" x2="404" y2="770" stroke="#e6ded0" stroke-width="1"/>
+<line x1="852" y1="70" x2="852" y2="770" stroke="#e6ded0" stroke-width="1"/>
+<text x="40" y="88" class="col">1 &#183; AUTHORIZE</text>
+<text x="428" y="88" class="col">2 &#183; SETTLE, ONE TRANSACTION</text>
+<text x="876" y="88" class="col">3 &#183; PROVE, FROM THE CHAIN ALONE</text>
+
+<!-- authorize ------------------------------------------------------------->
+<rect class="box" x="40" y="110" width="330" height="86"/>
+<text x="58" y="136" class="lbl" font-weight="600">Invoices to pay</text>
+<text x="58" y="156" class="sub">payee, amount, invoice reference,</text>
+<text x="58" y="174" class="sub">ISO 20022 purpose code, CBUAE purpose code</text>
+
+<rect class="box ours" x="40" y="216" width="330" height="104"/>
+<text x="58" y="242" class="lbl" font-weight="600">Sanad builds the run</text>
+<text x="58" y="262" class="mono">iso20022.encode  ~60 bytes per payment</text>
+<text x="58" y="280" class="mono">memoId = keccak(endToEndId)</text>
+<text x="58" y="298" class="mono">mandate digest over payer, token, chain, payees</text>
+<text x="58" y="314" class="sub">order sensitive, so a batch cannot be reordered after signing</text>
+
+<rect class="box ok" x="40" y="340" width="330" height="66"/>
+<text x="58" y="366" class="lbl" font-weight="600">Screen against Arc's own Denylist</text>
+<text x="58" y="386" class="mono">0x360b451b&#8230;  isDenylisted(address)</text>
+<text x="58" y="400" class="sub">a read on chain, not a vendor subscription</text>
+
+<rect class="box" x="40" y="430" width="158" height="118"/>
+<text x="58" y="456" class="lbl" font-weight="600">Payer's own key</text>
+<text x="58" y="476" class="sub">self submitted.</text>
+<text x="58" y="494" class="sub">The payer sends the</text>
+<text x="58" y="512" class="sub">transaction and pays</text>
+<text x="58" y="530" class="sub">the gas.</text>
+
+<rect class="box circle" x="212" y="430" width="158" height="118"/>
+<text x="230" y="456" class="lbl" font-weight="600" fill="#1c5a9e">Circle Wallet</text>
+<text x="230" y="474" class="sub">developer controlled.</text>
+<text x="230" y="492" class="sub">Signs one EIP-3009</text>
+<text x="230" y="510" class="sub">authorization per payout.</text>
+<text x="230" y="528" class="sub">This app never holds</text>
+<text x="230" y="544" class="sub">the key.</text>
+
+<rect class="box" x="40" y="576" width="330" height="60"/>
+<text x="58" y="600" class="lbl" font-weight="600">Operator</text>
+<text x="58" y="620" class="sub">submits the batch and pays the gas. Never holds the funds.</text>
+
+<path class="ln" d="M205 196 L205 214"/>
+<path class="ln" d="M205 320 L205 338"/>
+<path class="ln" d="M205 406 L205 428"/>
+<path class="ln" d="M291 548 L291 574"/>
+
+<!-- settle ---------------------------------------------------------------->
+<rect class="box arc" x="428" y="110" width="400" height="56"/>
+<text x="446" y="134" class="lbl" font-weight="600">Multicall3From</text>
+<text x="446" y="152" class="mono">0x522fAf9A&#8230;  aggregate3(Call3[])</text>
+
+<rect class="box arc" x="428" y="190" width="400" height="52"/>
+<text x="446" y="212" class="lbl" font-weight="600">CallFrom precompile</text>
+<text x="446" y="230" class="mono">0x1800&#8230;0003  keeps the payer as msg.sender</text>
+
+<rect class="box arc" x="428" y="266" width="400" height="52"/>
+<text x="446" y="288" class="lbl" font-weight="600">Memo</text>
+<text x="446" y="306" class="mono">0x5294E992&#8230;  memo(target, data, memoId, memoData)</text>
+
+<rect class="box ours" x="428" y="342" width="190" height="92"/>
+<text x="446" y="366" class="lbl" font-weight="600">SanadMandate</text>
+<text x="446" y="384" class="mono">open(runId, digest,</text>
+<text x="446" y="400" class="mono">  total, count, payer, pq)</text>
+<text x="446" y="422" class="sub">anchors the authorization</text>
+
+<rect class="box arc" x="638" y="342" width="190" height="92"/>
+<text x="656" y="366" class="lbl" font-weight="600">USDC</text>
+<text x="656" y="384" class="mono">transfer, or</text>
+<text x="656" y="400" class="mono">transferWithAuthorization</text>
+<text x="656" y="422" class="sub">one call per payee</text>
+
+<rect class="box" x="428" y="458" width="400" height="46"/>
+<text x="446" y="486" class="mono">PQ precompile 0x1800&#8230;0004   verifySlhDsaSha2128s, optional</text>
+
+<rect class="box ok" x="428" y="528" width="400" height="108"/>
+<text x="446" y="552" class="lbl" font-weight="600">What lands on Arc, in one transaction</text>
+<text x="446" y="574" class="mono">MandateOpened(runId, payer, submitter, digest, &#8230;)</text>
+<text x="446" y="592" class="mono">Memo(sender, target, callDataHash, memoId, memo)  &#215; N</text>
+<text x="446" y="610" class="mono">Transfer(payer, payee, amount)                    &#215; N</text>
+<text x="446" y="628" class="sub">measured 0.00164 USDC per payee, instruction included</text>
+
+<path class="ln" d="M628 166 L628 188"/>
+<path class="ln" d="M628 242 L628 264"/>
+<path class="ln" d="M523 318 L523 340"/>
+<path class="ln" d="M733 318 L733 340"/>
+<path class="ln" d="M523 434 L523 456"/>
+<path class="ln" d="M628 504 L628 526"/>
+<path class="ln" d="M370 470 L426 140"/>
+<path class="ln" d="M370 600 L426 150"/>
+
+<!-- prove ----------------------------------------------------------------->
+<rect class="box" x="876" y="110" width="324" height="92"/>
+<text x="894" y="136" class="lbl" font-weight="600">An auditor, with no key</text>
+<text x="894" y="156" class="mono">rebuild_ledger.py</text>
+<text x="894" y="176" class="sub">three eth_getLogs, plus one</text>
+<text x="894" y="192" class="sub">eth_getTransactionByHash per run</text>
+
+<rect class="box ok" x="876" y="226" width="324" height="152"/>
+<text x="894" y="250" class="lbl" font-weight="600">Three checks, not three claims</text>
+<text x="894" y="272" class="sub">1. the memo's callDataHash matches the</text>
+<text x="894" y="288" class="sub">   inner call read from the transaction input</text>
+<text x="894" y="310" class="sub">2. the mandate digest recomputed from the</text>
+<text x="894" y="326" class="sub">   events equals the one anchored on chain</text>
+<text x="894" y="348" class="sub">3. every Transfer names the payer, so custody</text>
+<text x="894" y="364" class="sub">   never moved</text>
+
+<rect class="box" x="876" y="402" width="324" height="118"/>
+<text x="894" y="426" class="lbl" font-weight="600">Derived, never stored</text>
+<text x="894" y="448" class="sub">the payout ledger, run by run</text>
+<text x="894" y="468" class="sub">totals by ISO 20022 purpose code</text>
+<text x="894" y="488" class="sub">totals by CBUAE purpose code, the regulator view</text>
+<text x="894" y="508" class="sub">counterparty payment history, read as credit</text>
+
+<rect class="box ok" x="876" y="544" width="324" height="92"/>
+<text x="894" y="570" class="lbl" font-weight="600">Verdict</text>
+<text x="894" y="592" class="mono">every run reconciles against its own mandate</text>
+<text x="894" y="610" class="mono">3 of 3 authorizations recomputed and matched</text>
+<text x="894" y="628" class="sub">drop the database and this answer does not change</text>
+
+<path class="lng" d="M828 582 L874 160"/>
+<path class="ln" d="M1038 202 L1038 224"/>
+<path class="ln" d="M1038 378 L1038 400"/>
+<path class="ln" d="M1038 520 L1038 542"/>
+
+<text x="40" y="700" class="sub">Arc testnet, chain 5042002. USDC is both the settlement asset and the gas token. Boxes in cream are Arc primitives that ship with the chain, blue are ours, dashed blue is Circle.</text>
+<text x="40" y="722" class="sub">Educational and testnet demo purposes only.</text>
+</svg>

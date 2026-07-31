@@ -1,0 +1,35 @@
+{
+  "network": "arc-testnet",
+  "chainId": 5042002,
+  "rpc": "https://rpc.testnet.arc.network",
+  "explorer": "https://testnet.arcscan.app",
+  "contracts": {
+    "SanadMandate": {
+      "address": "0xC73090627ac5ed6fb651807c6A3E64D2FFa34194",
+      "deployTx": "0x7d362d3946d1294de2bb94e8784a35e3ff9929be71ce93ec382ae73d661b1f7b",
+      "deployer": "0xDB6c6340342e71A63cD11Ebac2185204b7777777",
+      "deployedAt": "2026-07-31",
+      "solc": "0.8.29",
+      "optimizerRuns": 200,
+      "deployBlock": 54525184,
+      "note": "open() takes an explicit payer and the event records payer and submitter separately, so an operator submitted run stays honest about who authorized it"
+    },
+    "SanadMandateV1": {
+      "address": "0x280663771aD557048a87632b5F73201734605f85",
+      "superseded": true,
+      "why": "the first deploy conflated the payer with the transaction submitter"
+    }
+  },
+  "arcNative": {
+    "comment": "Not ours. Arc ships these, verified live with cast on 2026-07-31. Memo, Multicall3From and the CallFrom precompile arrived in the Zero7 hardfork.",
+    "USDC": "0x3600000000000000000000000000000000000000",
+    "EURC": "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
+    "Memo": "0x5294E9927c3306DcBaDb03fe70b92e01cCede505",
+    "Multicall3From": "0x522fAf9A91c41c443c66765030741e4AaCe147D0",
+    "CallFromPrecompile": "0x1800000000000000000000000000000000000003",
+    "PQPrecompile": "0x1800000000000000000000000000000000000004",
+    "Denylist": "0x360b451bb0490637F52fa1794961455615777757",
+    "ProtocolConfig": "0x3600000000000000000000000000000000000001",
+    "Permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3"
+  }
+}

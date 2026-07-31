@@ -1,0 +1,60 @@
+{
+ "runId": "RUN-20260731-020957",
+ "txHash": "0xe13ea73960c7872efc5726cb441607b6e885d88adc93e63601692caabf7446b8",
+ "explorer": "https://testnet.arcscan.app/tx/0xe13ea73960c7872efc5726cb441607b6e885d88adc93e63601692caabf7446b8",
+ "blockNumber": 54521292,
+ "status": 1,
+ "gasUsed": 262381,
+ "feeUsdc": 0.006559525,
+ "feePerPayeeUsdc": 0.001639881,
+ "mandate": {
+  "address": "0x280663771aD557048a87632b5F73201734605f85",
+  "runIdHash": "0x82a1928a3581026a53668cb780878e7ade7be6cc71a62df6f37dc9f08b96bb18",
+  "payer": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+  "digest": "0x9298e2a1c2a4774941782ea837f2d4a1c572d55a83a6a61a0f022eb13e017a7d",
+  "digestMatchesLocalRun": true,
+  "totalMinor": 56250,
+  "payeeCount": 4,
+  "pqVerified": false
+ },
+ "memoEvents": 5,
+ "usdcTransfers": 4,
+ "payments": [
+  {
+   "memoId": "0x2b341dfbc9a6b7827d95c53c34508e6e2a31124cbd1f6d81a01913e3a70354b6",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322367,
+   "instruction": "INV-AE-4101, SUPP (Supplier payment), creditor ref SUP-IN-018, invoice INV-AE-4101 dated 2026-07-31 for 0.012500, document sha256 556f3bd46ef55cc3",
+   "payee": "0x6a1b4267921f41f9D5D1FACF998Da9BB930701c4",
+   "amountMinor": 12500,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xe9c423c868b833acf88f4a5f3fa353b4ac17d58b6a4dff181c58e6a7f7289be2",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322368,
+   "instruction": "INV-AE-4102, SCVE (Purchase and sale of services), creditor ref CTR-VN-004, invoice INV-AE-4102 dated 2026-07-31 for 0.008750",
+   "payee": "0x000000000000000000000000000000000000dEaD",
+   "amountMinor": 8750,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xd214fb53fdf80f20b12e512d1606067e485928bf5a3b10eb80ab86bc3d56ac7b",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322369,
+   "instruction": "INV-AE-4103, GDDS (Purchase and sale of goods), creditor ref PO-TR-221, invoice INV-AE-4103 dated 2026-07-31 for 0.015000, funded with 550.95 AED at 0.272294",
+   "payee": "0x000000000000000000000000000000000000bEEF",
+   "amountMinor": 15000,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xd23364283c21cda1dfd2a8fad37aca9da6386fb3a8328cb107ee4a8068d73426",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322370,
+   "instruction": "INV-AE-4104, SALA (Salary payment), creditor ref EMP-EG-77",
+   "payee": "0x1111111111111111111111111111111111111111",
+   "amountMinor": 20000,
+   "bindsItsTransfer": true
+  }
+ ]
+}

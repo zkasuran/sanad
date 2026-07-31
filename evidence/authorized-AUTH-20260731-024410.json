@@ -1,0 +1,34 @@
+{
+ "runId": "AUTH-20260731-024410",
+ "signerBackend": "local",
+ "payer": "0x6a1b4267921f41f9D5D1FACF998Da9BB930701c4",
+ "operator": "0xDB6c6340342e71A63cD11Ebac2185204b7777777",
+ "txHash": "0x721e4e3b0cabebb9c834013ad884222356e4bf60609612728ec2caf73a107dcf",
+ "explorer": "https://testnet.arcscan.app/tx/0x721e4e3b0cabebb9c834013ad884222356e4bf60609612728ec2caf73a107dcf",
+ "blockNumber": 54525346,
+ "gasUsed": 301001,
+ "gasFeeUsdc": 0.007525025,
+ "payerTransactionCount": 2,
+ "authorizations": [
+  {
+   "reference": "AUTH-20260731-024410-01",
+   "payee": "0x000000000000000000000000000000000000dEaD",
+   "amountMinor": 4000,
+   "nonce": "0xe95ba4014c3f9e1a2b1552e1298aebb53628e00117fedd8c90de9b2ae025a7c1",
+   "validBefore": 1785469454,
+   "signature": "0xba3b778daddb9a5bda617d4bd748fe5af563e6429ee562333d530f5d88278d2d4af138eed1d5025c569e2ebd6f29fbb0a531b981fabe6a4afab4eab540c2b2d61b",
+   "recoveredSigner": "0x6a1b4267921f41f9D5D1FACF998Da9BB930701c4"
+  },
+  {
+   "reference": "AUTH-20260731-024410-02",
+   "payee": "0x000000000000000000000000000000000000bEEF",
+   "amountMinor": 6000,
+   "nonce": "0x4ddf6adcdc1afb3ca0c1365ddaf020fe7cb03a9020f6a35d332d20aeea949f50",
+   "validBefore": 1785469454,
+   "signature": "0xc3fd4aebc323b9a11fa0b3f699c1c2f767628940093e76bcbbfce9b59c16b2e00edf1b9297db1c1de6aeccfd0fc81caec7615261db653c1eb07ab1c7d83350bd1b",
+   "recoveredSigner": "0x6a1b4267921f41f9D5D1FACF998Da9BB930701c4"
+  }
+ ],
+ "usdcTransfersFromPayer": 2,
+ "denylistScreening": "2 payee(s) screened against Arc's own denylist at 0x360b451bb0490637F52fa1794961455615777757, none denylisted"
+}

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sanad, proof carrying payouts on Arc</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="mark">سند</span>
+    <div>
+      <h1>Sanad</h1>
+      <p>Every payout carries its own instruction, on chain</p>
+    </div>
+  </div>
+  <div class="chain" id="chain">connecting to Arc</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-view="build">Build a run</button>
+  <button class="tab" data-view="audit">Audit from the chain</button>
+  <button class="tab" data-view="stack">What this uses</button>
+</nav>
+
+<main>
+  <!-- BUILD ------------------------------------------------------------------->
+  <section id="view-build" class="view active">
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Payout run</h2>
+          <div class="row-actions">
+            <button id="add-row" class="ghost">Add a payee</button>
+            <button id="load-sample" class="ghost">Load a Dubai SME run</button>
+          </div>
+        </div>
+        <table id="payees">
+          <thead>
+            <tr>
+              <th>Payee</th><th>USDC</th><th>Invoice reference</th>
+              <th>ISO 20022</th><th>CBUAE</th><th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="note">
+          ISO 20022 is the international purpose code. CBUAE is the three letter code the
+          Central Bank of the UAE requires on every outbound transfer, which today gets
+          typed into a free text field and does not survive a stablecoin transfer at all.
+        </p>
+        <div class="actions">
+          <button id="preview" class="primary">Screen and simulate</button>
+          <button id="settle" class="danger" disabled>Settle on Arc</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>What goes on chain</h2>
+        <div id="preflight" class="empty">Simulate a run to see the instruction bytes,
+          the denylist screening and the cost.</div>
+      </div>
+    </div>
+    <div class="panel" id="settled-panel" hidden>
+      <h2>Settled</h2>
+      <div id="settled"></div>
+    </div>
+  </section>
+
+  <!-- AUDIT ------------------------------------------------------------------->
+  <section id="view-audit" class="view">
+    <div class="panel wide">
+      <div class="panel-head">
+        <div>
+          <h2>Rebuild the ledger from Arc</h2>
+          <p class="sub">No database is consulted, because there is not one. Three log
+            queries and one transaction read per run, then arithmetic.</p>
+        </div>
+        <div class="row-actions">
+          <button id="rebuild" class="primary">Rebuild from Arc</button>
+          <button id="wipe" class="ghost">Clear this view</button>
+        </div>
+      </div>
+      <div id="verdict" class="verdict" hidden></div>
+      <div id="ledger" class="empty">Nothing loaded. Press rebuild.</div>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <h2>By purpose code</h2>
+        <div id="purposes" class="empty">Rebuild first.</div>
+      </div>
+      <div class="panel">
+        <h2>Counterparty history</h2>
+        <p class="sub">Repeat, on time settlement to the same counterparty is what a
+          lender reads as credit history. This is derived, not stored.</p>
+        <div id="counterparties" class="empty">Rebuild first.</div>
+      </div>
+    </div>
+    <div class="panel wide">
+      <h2>Find a payment by its invoice reference</h2>
+      <p class="sub">The memo id is keccak of the ISO 20022 end to end id, and it is an
+        indexed topic, so this is one log filter rather than a scan.</p>
+      <div class="lookup">
+        <input id="reference" placeholder="INV-AE-4101" />
+        <button id="find" class="ghost">Find</button>
+      </div>
+      <div id="found"></div>
+    </div>
+  </section>
+
+  <!-- STACK ------------------------------------------------------------------->
+  <section id="view-stack" class="view">
+    <div class="panel wide">
+      <h2>Arc primitives this is built on</h2>
+      <p class="sub">Addresses are read from the chain at load, not hardcoded in this page.</p>
+      <div id="stack" class="empty">loading</div>
+      <h2 class="mt">Circle products in use</h2>
+      <ul class="stack-list">
+        <li><b>USDC on Arc</b>, the settlement asset and the gas token, with EIP-3009
+          authorizations so a payer can authorize without broadcasting.</li>
+        <li><b>Circle Wallets</b>, developer controlled. In the authorized settlement mode
+          the payer's key lives in Circle's custody and this application never holds it.
+          The wallet signs each authorization through Circle's API and an operator submits
+          the batch, so the wallet's transaction count stays at zero while its money moves.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Arc testnet. Educational and testnet demo purposes only.</span>
+  <span id="foot-block"></span>
+</footer>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+ "runId": "RUN-20260731-023145",
+ "txHash": "0x14eed322f0d6d2fd9a6f52262767a2597f30b38ff217254d6b03b7a359026f9a",
+ "explorer": "https://testnet.arcscan.app/tx/0x14eed322f0d6d2fd9a6f52262767a2597f30b38ff217254d6b03b7a359026f9a",
+ "blockNumber": 54523874,
+ "status": 1,
+ "gasUsed": 263579,
+ "feeUsdc": 0.006589475,
+ "feePerPayeeUsdc": 0.001647369,
+ "mandate": {
+  "address": "0x280663771aD557048a87632b5F73201734605f85",
+  "runIdHash": "0x75c55bc4f782611a2c0942909080b77d1fa60c60dd9ef6fdc8ef6f8692eea30e",
+  "payer": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+  "digest": "0xfa0ac62f1d0c0f809337799026e9e5d87b32c1020ac04f66291a11e65b25bf47",
+  "digestMatchesLocalRun": true,
+  "totalMinor": 56250,
+  "payeeCount": 4,
+  "pqVerified": false
+ },
+ "memoEvents": 5,
+ "usdcTransfers": 4,
+ "payments": [
+  {
+   "memoId": "0x2b341dfbc9a6b7827d95c53c34508e6e2a31124cbd1f6d81a01913e3a70354b6",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322386,
+   "instruction": "INV-AE-4101, SUPP (Supplier payment), CBUAE GDI (Goods bought (imports in CIF value)), creditor ref SUP-IN-018, invoice INV-AE-4101 dated 2026-07-31 for 0.012500, document sha256 556f3bd46ef55cc3",
+   "payee": "0x6a1b4267921f41f9D5D1FACF998Da9BB930701c4",
+   "amountMinor": 12500,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xe9c423c868b833acf88f4a5f3fa353b4ac17d58b6a4dff181c58e6a7f7289be2",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322387,
+   "instruction": "INV-AE-4102, SCVE (Purchase and sale of services), CBUAE PMS (Professional and management consulting services), creditor ref CTR-VN-004, invoice INV-AE-4102 dated 2026-07-31 for 0.008750",
+   "payee": "0x000000000000000000000000000000000000dEaD",
+   "amountMinor": 8750,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xd214fb53fdf80f20b12e512d1606067e485928bf5a3b10eb80ab86bc3d56ac7b",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322388,
+   "instruction": "INV-AE-4103, GDDS (Purchase and sale of goods), CBUAE GDI (Goods bought (imports in CIF value)), creditor ref PO-TR-221, invoice INV-AE-4103 dated 2026-07-31 for 0.015000, funded with 550.95 AED at 0.272294",
+   "payee": "0x000000000000000000000000000000000000bEEF",
+   "amountMinor": 15000,
+   "bindsItsTransfer": true
+  },
+  {
+   "memoId": "0xd23364283c21cda1dfd2a8fad37aca9da6386fb3a8328cb107ee4a8068d73426",
+   "sender": "0xdb6c6340342e71a63cd11ebac2185204b7777777",
+   "memoIndex": 322389,
+   "instruction": "INV-AE-4104, SALA (Salary payment), CBUAE SAL (Salary (compensation of employees)), creditor ref EMP-EG-77",
+   "payee": "0x1111111111111111111111111111111111111111",
+   "amountMinor": 20000,
+   "bindsItsTransfer": true
+  }
+ ]
+}

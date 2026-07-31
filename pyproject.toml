@@ -1,0 +1,52 @@
+[project]
+name = "sanad"
+version = "0.1.0"
+description = "Proof carrying payout runs on Arc: every USDC payment carries its ISO 20022 instruction on chain, batches settle from the payer's own address, and the whole ledger rebuilds from chain logs alone"
+requires-python = ">=3.11"
+dependencies = [
+    "web3>=7.0.0",
+    "eth-account>=0.13.0",
+    "eth-abi>=5.0.0",
+    "eth-utils>=4.0.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "circle-developer-controlled-wallets>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "mypy>=1.10.0",
+    "ruff>=0.5.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sanad"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+mypy_path = "src"
+packages = ["sanad"]
+warn_unreachable = true
