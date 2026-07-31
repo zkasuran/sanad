@@ -17,6 +17,8 @@ Two Arc specifics are baked in because they cost time to discover:
 from __future__ import annotations
 
 import logging
+import re
+import time
 from dataclasses import dataclass
 from typing import Any
 
@@ -157,17 +159,68 @@ class ArcClient:
         topics: list[Any] | None = None,
         from_block: int | str = 0,
         to_block: int | str = "latest",
+        window: int = 20_000,
     ) -> list[Any]:
-        return list(
-            self.w3.eth.get_logs(
-                {  # type: ignore[arg-type]
-                    "address": address,
-                    "topics": topics or [],
-                    "fromBlock": from_block,
-                    "toBlock": to_block,
-                }
-            )
-        )
+        """Read logs in block windows, honouring the range the RPC asks for.
+
+        The public Arc testnet RPC caps a single `eth_getLogs` at 20,000 results and
+        refuses anything wider, either with `413 Payload Too Large` or with
+        `-32602 query exceeds max results 20000, retry with the range A-B`. It names the
+        range it will accept, so that hint is used when present and the window is
+        quartered when it is not. The audit therefore works from a laptop against the
+        public endpoint with no paid archive node.
+        """
+        start = int(from_block) if not isinstance(from_block, str) or from_block.isdigit() else 0
+        end = int(self.w3.eth.block_number) if to_block == "latest" else int(to_block)
+        span, floor = max(1, window), 1
+        throttled = 0
+        found: list[Any] = []
+        while start <= end:
+            stop = min(start + span - 1, end)
+            try:
+                found.extend(
+                    self.w3.eth.get_logs(
+                        {  # type: ignore[arg-type]
+                            "address": address,
+                            "topics": topics or [],
+                            "fromBlock": start,
+                            "toBlock": stop,
+                        }
+                    )
+                )
+            except Exception as exc:  # noqa: BLE001 - the RPC signals overflow many ways
+                text = str(exc).lower()
+                if "429" in text or "too many requests" in text:
+                    if throttled >= 5:
+                        raise
+                    throttled += 1
+                    pause = 2 ** throttled
+                    logger.info("rpc rate limited, waiting %ss before retrying %s..%s", pause, start, stop)
+                    time.sleep(pause)
+                    continue
+                overflow = any(
+                    marker in text
+                    for marker in (
+                        "payload too large",
+                        "413",
+                        "max results",
+                        "max allowed range",
+                        "too many",
+                        "more than",
+                    )
+                )
+                hint = re.search(r"retry with the range (\d+)\s*-\s*(\d+)", text)
+                if hint and int(hint.group(2)) >= start:
+                    span = max(floor, int(hint.group(2)) - start + 1)
+                    logger.info("rpc asked for %s..%s, window now %s blocks", start, hint.group(2), span)
+                    continue
+                if not overflow or span <= floor:
+                    raise
+                span = max(floor, span // 4)
+                logger.info("log window too wide at %s..%s, retrying at %s blocks", start, stop, span)
+                continue
+            start = stop + 1
+        return found
 
     def decode_single(self, types: list[str], data: bytes) -> Any:
         return abi_decode(types, data)

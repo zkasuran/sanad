@@ -19,6 +19,7 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from eth_utils.address import to_checksum_address
 from pydantic import BaseModel, Field
 
 from ..arc import addresses
@@ -202,6 +203,12 @@ def preview(payload: RunIn) -> dict[str, Any]:
     """
     read = client()
     payer_address = os.getenv("SANAD_PAYER_ADDRESS", "")
+    if payer_address:
+        # web3 rejects a non-checksum address with an opaque 500, so accept either form.
+        try:
+            payer_address = to_checksum_address(payer_address)
+        except ValueError as exc:
+            raise HTTPException(422, f"SANAD_PAYER_ADDRESS is not an address: {payer_address}") from exc
     if not payer_address:
         try:
             payer_address = client(signing=True).address
